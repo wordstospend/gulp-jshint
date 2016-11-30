@@ -3,6 +3,7 @@ var stream = require('../stream');
 var defaults = require('lodash/defaults');
 
 exports.failReporter = require('./fail');
+exports.kaizenReporter = require('./kaizen');
 
 exports.loadReporter = function (reporter) {
   // we want the function
@@ -27,10 +28,14 @@ exports.loadReporter = function (reporter) {
 };
 
 exports.reporter = function (reporter, reporterCfg) {
-  reporterCfg = reporterCfg || {};
+    reporterCfg = reporterCfg || {};
+    console.log("config to reporter " + JSON.stringify(reporterCfg))
+    console.log("reporter " + reporter);
 
   if (reporter === 'fail') {
     return exports.failReporter(reporterCfg);
+  } else if (reporter === 'kaizen') {
+    return exports.kaizenReporter(reporterCfg);
   }
 
   var rpt = exports.loadReporter(reporter || 'default');
